@@ -13,21 +13,21 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638652678,
-        "face_id": "913211101",
+        "version": 638652679,
+        "face_id": "913211107",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
-        "size": 199840,
-        "sha256": "4bc7423c065f231725a5d45b41105a1882fd0d6c7986cea06821fb7b2cdddb19"
+        "size": 238312,
+        "sha256": "c8f36d85024c0f7a1f3b37d84d46c8c757483780c9c4c5413971cca59cc6b94a"
       },
       "modules": [
         {
           "id": "bluetooth_audio",
           "name": "NoirMusic",
-          "version": 89,
-          "version_name": "0.4.57",
+          "version": 90,
+          "version_name": "0.4.58",
           "path": "xiaomi-band-9/3.1.35/NoirMusic/NoirMusic-Band9-3.1.35.chem",
-          "size": 321480,
-          "sha256": "b076bb892df124ba816a46e6af5b1082398e26f3caa2a60438c8ede9d869d1a2"
+          "size": 320488,
+          "sha256": "ccb31e59a68ba39377476d1b83f07aacb27bedc86d399714fc00742c790bba79"
         }
       ]
     }

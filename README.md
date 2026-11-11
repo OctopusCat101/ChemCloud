@@ -14,7 +14,9 @@ xiaomi-band-9/
 
 `index.json` 描述目标、固件摘要、安装器表盘 ID、版本，以及所有下载文件的长度和 SHA-256。`.chem` 内含原生 ELF、Ed25519 签名凭据、模块清单和资源。客户端与手环分别验证，目标或固件不匹配时拒绝安装。
 
-远程仓库尚未创建，`repository.json` 中的地址保留为空。创建 GitHub 仓库并上传这些文件后，将 ChemClient 的 `cloud.json` 中 `repository_url` 设置为可直接读取 `index.json` 的 HTTPS 根目录，例如 `https://raw.githubusercontent.com/OWNER/REPO/main`，重新打包客户端。客户端不会向空地址发送网络请求。
+发布仓库为 https://github.com/OctopusCat101/ChemCloud 。`repository.json` 和 ChemClient 的 `cloud.json` 已配置镜像根地址 `https://gh-proxy.com/https://raw.githubusercontent.com/OctopusCat101/ChemCloud/main`，目录和安装文件均经此镜像下载并校验 SHA-256。
+
+当前发布：Chem 构建号 `0x26111107`、安装器 ID `913211107`、NoirMusic `0.4.58 / code90`，对应 ChemClient `1.7.0` 和 ABI 2.0。构建、主机测试及 ARM 安装/上传回放通过；实际蓝牙、耳机启动音频和手环 UI 仍需实机验收。
 
 发布流程：先构建 Chem 安装器和 NoirMusic 模块，再运行 `D:/Chem/scripts/publish-cloud.py`。脚本更新本地索引、文件摘要和客户端随包目标索引，不执行提交或推送。每次发布新版加载器必须同时更新原生构建号和九位表盘 ID，避免把旧安装器认作最新。
 
