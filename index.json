@@ -7,6 +7,7 @@
       "target": "xiaomi-band-9-3.1.35",
       "firmware_sha256": "03e838857f68a98688173053c19990571c44a561cbb90d92a7fa798c85a32522",
       "device_ids": [
+        "miwear.watch.n66tc",
         "n66tc",
         "N66TC",
         "xiaomi.watch.n66",
