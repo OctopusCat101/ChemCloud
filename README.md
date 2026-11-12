@@ -16,7 +16,7 @@ xiaomi-band-9/
 
 发布仓库为 https://github.com/OctopusCat101/ChemCloud 。`repository.json` 和 ChemClient 的 `cloud.json` 已配置镜像根地址 `https://gh-proxy.com/https://raw.githubusercontent.com/OctopusCat101/ChemCloud/main`，目录和安装文件均经此镜像下载并校验 SHA-256。
 
-当前发布：Chem 构建号 `0x26111205`、安装器 ID `913211205`、NoirMusic `0.4.58 / code90`，对应 ChemClient `1.7.17` 和 ABI 2.0。新增默认关闭、需主动确认的自动启动，以及持久化启动失败防护、60 秒稳定观察和安全模式恢复操作。构建、主机测试及 ARM 安装/上传/Flash 模拟通过；实际自动启动、Flash 写入、蓝牙、耳机启动音频和手环 UI 仍需实机验收。
+当前发布：Chem 构建号 `0x26111206`、安装器 ID `913211206`、NoirMusic `0.4.58 / code90`，对应 ChemClient `1.7.18` 和 ABI 2.0。修订自动启动的同步 Flash 接口与读回链路，按阶段报告失败；移除手环更新按钮，更新通过客户端完成。提供默认关闭、需主动确认的自动启动，以及持久化启动失败防护、60 秒稳定观察和安全模式恢复操作。构建、主机测试及 ARM 安装/上传/Flash 模拟通过；实际自动启动、Flash 写入、蓝牙、耳机启动音频和手环 UI 仍需实机验收。
 
 发布流程：先构建 Chem 安装器和 NoirMusic 模块，再运行 `D:/Chem/scripts/publish-cloud.py`。脚本更新本地索引、文件摘要和客户端随包目标索引，不执行提交或推送。每次发布新版加载器必须同时更新原生构建号和九位表盘 ID，避免把旧安装器认作最新。
 
