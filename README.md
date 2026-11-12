@@ -16,11 +16,11 @@ xiaomi-band-9/
 
 发布仓库为 https://github.com/OctopusCat101/ChemCloud 。`repository.json` 和 ChemClient 的 `cloud.json` 已配置镜像根地址 `https://gh-proxy.com/https://raw.githubusercontent.com/OctopusCat101/ChemCloud/main`，目录和安装文件均经此镜像下载并校验 SHA-256。
 
-当前发布：Chem 构建号 `0x26111107`、安装器 ID `913211107`、NoirMusic `0.4.58 / code90`，对应 ChemClient `1.7.2` 和 ABI 2.0。构建、主机测试及 ARM 安装/上传回放通过；实际蓝牙、耳机启动音频和手环 UI 仍需实机验收。
+当前发布：Chem 构建号 `0x26111203`、安装器 ID `913211203`、NoirMusic `0.4.58 / code90`，对应 ChemClient `1.7.15` 和 ABI 2.0。新增默认关闭、需主动确认的自动启动，以及持久化启动失败防护、60 秒稳定观察和安全模式恢复操作。构建、主机测试及 ARM 安装/上传/Flash 模拟通过；实际自动启动、Flash 写入、蓝牙、耳机启动音频和手环 UI 仍需实机验收。
 
 发布流程：先构建 Chem 安装器和 NoirMusic 模块，再运行 `D:/Chem/scripts/publish-cloud.py`。脚本更新本地索引、文件摘要和客户端随包目标索引，不执行提交或推送。每次发布新版加载器必须同时更新原生构建号和九位表盘 ID，避免把旧安装器认作最新。
 
-连接后客户端会检查安装器、必要时加入 Astro 上传队列，检测实际安装完成后切换，等待用户在手环运行。Astro API 4 仅开放添加上传队列，没有开始上传和上传完成接口；如宿主没有自动开始，需在宿主队列开始上传。普通 `.chem` 模块不使用表盘上传队列。
+连接后客户端先检查驻留服务，服务可用时直接显示模块列表。需要安装或更新安装器时显示安装按钮，仅在用户点击后加入 Astro 上传队列，检测实际安装完成后切换，等待用户在手环运行。Astro API 4 仅开放添加上传队列，没有开始上传和上传完成接口；如宿主没有自动开始，需在宿主队列开始上传。普通 `.chem` 模块不使用表盘上传队列。
 
 ChemClient 1.7.1 修复设备识别：按标准 DeviceInfo 的固件字段 2、型号字段 4 匹配，不要求不存在的产品字段 5；索引补充 `miwear.watch.n66tc`。
 
