@@ -15,11 +15,11 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638652934,
-        "face_id": "913211206",
+        "version": 638652935,
+        "face_id": "913211207",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
-        "size": 260756,
-        "sha256": "4be7db491a92e4be590765e1807249242e4d44dba736603655b1ddff03f0ade7"
+        "size": 261132,
+        "sha256": "a88754eef9f5b77dd223929354bdaf153fb201456bbd766e9fb6e85c11491e08"
       },
       "modules": [
         {
