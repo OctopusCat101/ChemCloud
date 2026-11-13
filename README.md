@@ -16,7 +16,7 @@ xiaomi-band-9/
 
 发布仓库为 https://github.com/OctopusCat101/ChemCloud 。`repository.json` 和 ChemClient 的 `cloud.json` 已配置镜像根地址 `https://gh-proxy.com/https://raw.githubusercontent.com/OctopusCat101/ChemCloud/main`，目录和安装文件均经此镜像下载并校验 SHA-256。
 
-当前发布：Chem 构建号 `0x26111302`、安装器 ID `913211302`、NoirMusic `0.4.58 / code90`，ABI 2.0。客户端插件单独分发。
+当前发布：Chem 构建号 `0x26111304`、安装器 ID `913211304`、NoirMusic `0.4.58 / code90`，ABI 2.0。客户端插件单独分发。
 
 自动启动由固件 `rcS` 末尾触发，后台 worker 等待 8 秒并检查系统就绪。撤回亮屏自动注册：仅在完全熄屏时由后台 owner 推进管理器注册和模块恢复；亮屏、AOD 或异常屏幕状态暂停，最后观察到非熄屏后至少等待 3 秒再继续。用户报告此前亮屏注入与切表盘、渲染并发时可能重启，因此采用熄屏策略。
 
