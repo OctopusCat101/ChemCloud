@@ -27,13 +27,20 @@ def run(*command, cwd=ROOT, timeout=None, env=None):
 
 def network_git(repository, *args):
     env = os.environ.copy()
+    env['GIT_TERMINAL_PROMPT'] = '0'
+    env['GCM_INTERACTIVE'] = 'Never'
     proxy = urllib.request.getproxies().get('https')
     if proxy:
         env['https_proxy'] = proxy
+    credentials = []
+    if shutil.which('gh') and subprocess.run(['gh', 'auth', 'status', '--hostname', 'github.com'],
+                                            capture_output=True, timeout=15).returncode == 0:
+        credentials = ['-c', 'credential.https://github.com.helper=',
+                       '-c', 'credential.https://github.com.helper=!gh auth git-credential']
     for attempt in range(3):
         try:
             run('git', '-c', 'http.version=HTTP/1.1', '-c', 'http.lowSpeedLimit=100',
-                '-c', 'http.lowSpeedTime=20', *args, cwd=repository, timeout=60, env=env)
+                '-c', 'http.lowSpeedTime=20', *credentials, *args, cwd=repository, timeout=60, env=env)
             return
         except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
             if attempt == 2:

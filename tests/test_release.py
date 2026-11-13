@@ -60,15 +60,18 @@ class ReleaseTests(unittest.TestCase):
         errors = [subprocess.CalledProcessError(128, 'git'),
                   subprocess.TimeoutExpired('git', 60), None]
         with patch.object(release.urllib.request, 'getproxies', return_value={'https': 'http://127.0.0.1:7897'}), \
+             patch.object(release.shutil, 'which', return_value=None), \
              patch.object(release, 'run', side_effect=errors) as run:
             release.network_git(ROOT, 'fetch', 'origin')
         self.assertEqual(run.call_count, 3)
         for call in run.call_args_list:
             self.assertEqual(call.kwargs['env']['https_proxy'], 'http://127.0.0.1:7897')
+            self.assertEqual(call.kwargs['env']['GIT_TERMINAL_PROMPT'], '0')
             self.assertEqual(call.kwargs['timeout'], 60)
 
     def test_network_failure_stops_after_three_attempts(self):
         with patch.object(release.urllib.request, 'getproxies', return_value={}), \
+             patch.object(release.shutil, 'which', return_value=None), \
              patch.object(release, 'run', side_effect=subprocess.CalledProcessError(128, 'git')) as run:
             with self.assertRaises(subprocess.CalledProcessError):
                 release.network_git(ROOT, 'push', 'origin', 'main')
