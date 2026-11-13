@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "target": "xiaomi-band-9-3.1.35",
+  "packages": [
+    {
+      "id": "abmf-icons",
+      "name": "ABMF 毛玻璃",
+      "path": "xiaomi-band-9/3.1.35/Magic/ABMF-Band9-3.1.35.magic",
+      "size": 434440,
+      "sha256": "df698e4c70b4b5eb9ae3ffd1214c6a66b32accc85ebebdc7568ab7bc51a6547a"
+    },
+    {
+      "id": "violet-calendar",
+      "name": "紫色日历",
+      "path": "xiaomi-band-9/3.1.35/Magic/VioletCalendar.magic",
+      "size": 372,
+      "sha256": "e3373f4c322779bd94291f77c0d96f346bd73c8cf13ac8593e32410bb95878d2"
+    }
+  ]
+}

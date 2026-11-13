@@ -15,11 +15,11 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638653189,
-        "face_id": "913211305",
+        "version": 638653193,
+        "face_id": "913211309",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
-        "size": 264996,
-        "sha256": "fc40592b12b7691a1fe9dd608a1eb0242bdced146e544286e91ce2e46cfb0ab8"
+        "size": 266488,
+        "sha256": "e3f009da572aadbda57368debfa9bcd0d62b90dfb17fbd91c30b87320f654096"
       },
       "modules": [
         {
@@ -30,6 +30,16 @@
           "path": "xiaomi-band-9/3.1.35/NoirMusic/NoirMusic-Band9-3.1.35.chem",
           "size": 320488,
           "sha256": "ccb31e59a68ba39377476d1b83f07aacb27bedc86d399714fc00742c790bba79"
+        },
+        {
+          "id": "com.chem.magic",
+          "name": "Magic",
+          "version": 7,
+          "version_name": "0.2.5",
+          "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
+          "path": "xiaomi-band-9/3.1.35/Magic/Magic-Band9-3.1.35.chem",
+          "size": 148019,
+          "sha256": "495f7074ebb8b4183b89c20b4229c39e796c0a854eea90ba23de7b19ff603728"
         }
       ]
     }
