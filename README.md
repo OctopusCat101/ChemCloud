@@ -47,28 +47,38 @@ Magic 的 `.magic` 示例从仓库下载后，在 ChemClient 的 Magic 导入页
 
 默认镜像根地址：`https://gh-proxy.com/https://raw.githubusercontent.com/OctopusCat101/ChemCloud/main`。客户端每次连接检查或刷新时获取清单，按文件摘要校验下载；Git 提交与推送使用仓库原地址。镜像可能存在缓存。
 
-## 一条命令发布
+## 统一管理与发布
 
-先完成需要更新的模块构建与测试，再执行：
-
-```powershell
-python D:/Chem/scripts/release-cloud.py --skip-build
-```
-
-此命令同步远端，校验已有 Chem、NoirMusic、Magic 及资源包，更新清单与说明，然后提交并推送。不带 `--skip-build` 会递增版本并构建、测试 Chem；仅更新模块时无需重建客户端或其他模块。Magic 位于相邻的 `D:/Magic`。
-
-仅检查当前构建，不修改或上传：
+上传、清单同步、多项目管理工具均在本仓库，业务项目只保留自己的构建工具。路径及构建命令集中在 [projects.toml](projects.toml)，机器特有路径可放在忽略提交的 `projects.local.toml`。
 
 ```powershell
-python D:/Chem/scripts/release-cloud.py --dry-run
+# 查看所有项目状态
+python D:/ChemCloud/workspace.py status
+
+# 构建、验证并发布 Magic；也可选择 chem、music 或 all
+python D:/ChemCloud/release.py magic
+
+# 一次发布多个项目
+python D:/ChemCloud/release.py chem magic
+
+# 已构建并验证，只同步、提交、上传现有产物
+python D:/ChemCloud/release.py
+
+# 只预检，不构建、不提交、不上传
+python D:/ChemCloud/release.py --dry-run
 ```
 
-只同步本地发布目录，不提交：
+指定项目发布不会把未选择模块的本地构建一起上传；其他设备目标和模块保留。发布前需递增修改模块自身的版本号；Chem 构建号和表盘 ID 在选择构建 Chem 时自动递增。客户端插件仍单独分发，可用 `workspace.py build client` 构建。
+
+源码仓库也可一次处理，不必逐个切目录：
 
 ```powershell
-python D:/Chem/scripts/publish-cloud.py
+python D:/ChemCloud/workspace.py commit chem client -m "Improve module management"
+python D:/ChemCloud/workspace.py push chem client
 ```
 
-发布脚本保留清单中的其他模块与设备目标，拒绝降级及同版本替换文件。新版 Chem 必须同时递增原生构建号和九位表盘 ID。Git 网络请求使用系统代理、HTTP/1.1、超时与重试；失败保留本地修改，不强推或自动回滚。
+`commit` 会暂存所选仓库内全部未被忽略的更改，执行前先查看 `status`；源码提交与云端产物发布分别选择。`all` 可处理所有已注册仓库，未初始化 Git 的目录会提示并跳过。
 
-不上传签名私钥、设备固件或构建中间文件。Magic 的来源和许可随模块提供。
+首次把 Magic 纳入 Git 可执行 `python D:/ChemCloud/workspace.py init magic`；创建它的远端源码仓库后，再配置 `origin`。工具不会替你创建 GitHub 仓库或自动上传未知源码。
+
+完整用法、目录职责和失败恢复见 [发布与多项目管理](docs/RELEASING.md)。Git 网络操作使用系统代理、HTTP/1.1、超时与重试，失败保留已完成工作，不强推。不上传签名私钥、设备固件或构建中间文件。

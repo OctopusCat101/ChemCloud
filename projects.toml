@@ -1,0 +1,30 @@
+schema = 1
+
+[projects.chem]
+path = "../Chem"
+build = ["tools/build/build.py", "--project", ".", "face"]
+tests = [["tests/tooling/test_boot_flash.py"], ["tests/tooling/test_boot_persistence.py"]]
+publish = true
+
+[projects.music]
+path = "../NoirMusic"
+build = ["{chem}/tools/build/build.py", "--project", ".", "package"]
+tests = []
+publish = true
+
+[projects.magic]
+path = "../Magic"
+build = ["build.py"]
+tests = [["build.py", "test"]]
+publish = true
+
+[projects.client]
+path = "../ChemClient"
+build = ["build.py", "--abp"]
+tests = []
+publish = false
+
+[projects.cloud]
+path = "."
+tests = [["-m", "unittest", "discover", "-s", "tests"]]
+publish = false
