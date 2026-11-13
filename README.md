@@ -79,6 +79,6 @@ python D:/ChemCloud/workspace.py push chem client
 
 `commit` 会暂存所选仓库内全部未被忽略的更改，执行前先查看 `status`；源码提交与云端产物发布分别选择。`all` 可处理所有已注册仓库，未初始化 Git 的目录会提示并跳过。
 
-首次把 Magic 纳入 Git 可执行 `python D:/ChemCloud/workspace.py init magic`；创建它的远端源码仓库后，再配置 `origin`。工具不会替你创建 GitHub 仓库或自动上传未知源码。
+Magic 已纳入独立私有源码仓库，并可通过上述命令统一提交和推送。新项目可执行 `python D:/ChemCloud/workspace.py init <项目名>` 初始化，再配置自己的 `origin`。
 
 完整用法、目录职责和失败恢复见 [发布与多项目管理](docs/RELEASING.md)。Git 网络操作使用系统代理、HTTP/1.1、超时与重试，失败保留已完成工作，不强推。不上传签名私钥、设备固件或构建中间文件。

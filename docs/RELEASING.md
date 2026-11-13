@@ -58,13 +58,9 @@ python D:/ChemCloud/workspace.py push chem client
 
 项目名可用 `chem`、`music`、`magic`、`client`、`cloud`；`all` 处理所有注册项目。独立仓库保留各自提交历史，批量操作中某一步失败会停止，之前完成的提交保留。
 
-Magic 当前尚未初始化 Git。首次执行：
+Magic 已初始化独立私有源码仓库并配置 `origin`，可直接参与批量提交和推送。新项目可执行 `python D:/ChemCloud/workspace.py init <项目名>` 初始化，创建远端仓库后配置真实的 `origin` 地址。未初始化的目录在批量 `all` 操作中明确提示并跳过，不会被悄悄当成已备份。
 
-```powershell
-python D:/ChemCloud/workspace.py init magic
-```
-
-在 GitHub 创建独立源码仓库后，在 Magic 目录配置真实的 `origin` 地址；随后即可用同一套批量提交和推送命令。未初始化的目录在批量 `all` 操作中明确提示并跳过，不会被悄悄当成已备份。
+这些个人项目不使用 GitHub Actions；构建和检查在本地完成，不消耗 Actions 额度。
 
 ## 失败恢复
 
