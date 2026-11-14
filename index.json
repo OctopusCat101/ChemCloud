@@ -34,12 +34,12 @@
         {
           "id": "com.chem.magic",
           "name": "Magic",
-          "version": 13,
-          "version_name": "0.2.11",
+          "version": 14,
+          "version_name": "0.2.12",
           "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
           "path": "xiaomi-band-9/3.1.35/Magic/Magic-Band9-3.1.35.chem",
-          "size": 155433,
-          "sha256": "9e4aa8a96dabc1d0fca384d874c5fbc16dc744d1f89257ecd0d642bdffa2112a"
+          "size": 156113,
+          "sha256": "5e0bdd2a6cb0b58873564b0a3ad194e5857e7f5dd23ad0839c1d61218ccaeea3"
         }
       ]
     }
