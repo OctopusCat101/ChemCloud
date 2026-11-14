@@ -15,31 +15,31 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638653195,
-        "face_id": "913211311",
+        "version": 638653446,
+        "face_id": "913211312",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
         "size": 266784,
-        "sha256": "320689a64e4bc15f4c246448161a204e03b4cf13ee326411ed9d1bb06601060c"
+        "sha256": "b5773005da10a4df6ba6598fc0e353f08839462da1098b66174ac7d7f77b7a04"
       },
       "modules": [
         {
           "id": "bluetooth_audio",
           "name": "NoirMusic",
-          "version": 90,
-          "version_name": "0.4.58",
+          "version": 92,
+          "version_name": "0.4.60",
           "path": "xiaomi-band-9/3.1.35/NoirMusic/NoirMusic-Band9-3.1.35.chem",
-          "size": 320488,
-          "sha256": "ccb31e59a68ba39377476d1b83f07aacb27bedc86d399714fc00742c790bba79"
+          "size": 321956,
+          "sha256": "aef15defd333a49e7c7a4efe8b2c2d52787f0cb8937a2dbadb69a502e2eabe86"
         },
         {
           "id": "com.chem.magic",
           "name": "Magic",
-          "version": 8,
-          "version_name": "0.2.6",
+          "version": 9,
+          "version_name": "0.2.7",
           "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
           "path": "xiaomi-band-9/3.1.35/Magic/Magic-Band9-3.1.35.chem",
-          "size": 148667,
-          "sha256": "625e9294e9640f0210cd7c1ba8493423cef365d1dc6acb5a5a08f09eb743a63e"
+          "size": 153415,
+          "sha256": "c467cff06fe55ffd9302b70e2d9f3a51e4812273f158ea1fe48afcffdd39c919"
         }
       ]
     }

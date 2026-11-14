@@ -2,7 +2,7 @@
 
 Chem 安装器、原生模块及资源包的发布仓库。当前支持 **小米手环 9 / 固件 3.1.35**。
 
-当前发布：Chem 构建号 `0x2611130B`、安装器 ID `913211311`、NoirMusic `0.4.58 / code90`、Magic `0.2.6 / code8`，ABI 2.0。客户端插件单独分发。
+当前发布：Chem 构建号 `0x26111406`、安装器 ID `913211312`、NoirMusic `0.4.60 / code92`、Magic `0.2.7 / code9`，ABI 2.0。客户端插件单独分发。
 
 ## 下载与安装
 
@@ -14,11 +14,11 @@ Chem 安装器、原生模块及资源包的发布仓库。当前支持 **小米
 | NoirMusic | 蓝牙音乐管理与播放 | [模块](xiaomi-band-9/3.1.35/NoirMusic/NoirMusic-Band9-3.1.35.chem) |
 | Magic | 图标、字体、日历与背景资源包管理 | [模块与资源包说明](xiaomi-band-9/3.1.35/Magic/README.md) |
 
-Magic 需要本次配套的 Chem 构建 `0x26111309` 或更新的兼容构建。手环端点击资源包进入详情，保留紫色开关与确认删除；已导入资源包可离线使用。ABMF 示例仅在应用列表和下拉通知菜单启用静态毛玻璃。
+Magic 需要本次配套的 Chem 构建 `0x26111309` 或更新的兼容构建。手环端点击资源包进入详情，保留紫色开关与确认删除；已导入资源包可离线使用。背景模糊独立管理，可按四个区域分别控制。
 
 更新 Chem 后需手动运行安装器，使驻留环境生效；更新 Magic 后需重启手环并运行 Chem，以释放旧回调，无需清空资源包。自动启动在熄屏且系统就绪时推进；升级不会静默清除已有安全模式或失败记录。
 
-本地构建、签名校验与相关回归通过；Magic 0.2.5 的实机显示和操作效果仍待验收。各文件仅适用于指定设备及精确固件。
+本地构建、签名校验与相关回归通过；本次更新的实机效果仍待验收。各文件仅适用于指定设备及精确固件。
 
 ## 目录与校验
 
@@ -30,7 +30,6 @@ xiaomi-band-9/3.1.35/
   NoirMusic/NoirMusic-Band9-3.1.35.chem
   Magic/
     Magic-Band9-3.1.35.chem
-    ABMF-Band9-3.1.35.magic
     VioletCalendar.magic
     resources.json
     README.md
@@ -41,7 +40,7 @@ xiaomi-band-9/3.1.35/
 
 加载器和模块按「设备 / 固件 / 名称」同级存放，只保留当前发布文件。`index.json` 记录固件摘要、安装器 ID、模块版本、文件长度与 SHA-256；`.chem` 内含 ELF、Ed25519 签名凭据、清单和资源，客户端与手环分别验证。
 
-Magic 的 `.magic` 示例从仓库下载后，在 ChemClient 的 Magic 导入页导入；当前云端模块列表只负责 `.chem` 安装。示例包长度与 SHA-256 单列在 `Magic/resources.json`。
+Magic 的自有 `.magic` 示例从仓库下载后，在 ChemClient 的 Magic 导入页导入；当前云端模块列表只负责 `.chem` 安装。示例包长度与 SHA-256 单列在 `Magic/resources.json`。ABMF 与 Glaze UI 为付费第三方资源，不随公开仓库分发；合法持有的本地资源包可自行导入。
 
 仓库：https://github.com/OctopusCat101/ChemCloud
 
