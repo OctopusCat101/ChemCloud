@@ -15,11 +15,11 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638653699,
-        "face_id": "913211313",
+        "version": 638653700,
+        "face_id": "913211314",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
         "size": 266928,
-        "sha256": "7a78d4646aaa295a9580ab12af15e0d502ad7ca635b2acb72043a366f9a71c2d"
+        "sha256": "64b5fd7f3018799fe000117acc73effce17fa4eb6a4521a2eec1934a309e0ef9"
       },
       "modules": [
         {
@@ -34,12 +34,12 @@
         {
           "id": "com.chem.magic",
           "name": "Magic",
-          "version": 22,
-          "version_name": "0.2.15",
+          "version": 23,
+          "version_name": "0.2.16",
           "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
           "path": "xiaomi-band-9/3.1.35/Magic/Magic-Band9-3.1.35.chem",
-          "size": 156157,
-          "sha256": "64696b2a7eb33d08d77f63f7b51d501096d6d2508d5dddb4ef02a9d93903f257"
+          "size": 156189,
+          "sha256": "91323406a5acde23506fcadd88dae2537626b5b979e907c95f76521057f4c806"
         }
       ]
     },
@@ -56,22 +56,22 @@
         "M2456B1"
       ],
       "loader": {
-        "version": 638653699,
-        "face_id": "913211313",
+        "version": 638653700,
+        "face_id": "913211314",
         "path": "xiaomi-band-10-nfc/3.1.28/chem-loader/Chem-Band10NFC-3.1.28.face",
-        "size": 246264,
-        "sha256": "2ddf59916bc4cabb72f14786f3201af95cd88ee6e96077c772de53c9e4e4bf28"
+        "size": 246444,
+        "sha256": "000590f7fe75cc62fe0fbf88510f5039d06950bea450afdbbb13aabd3d309513"
       },
       "modules": [
         {
           "id": "com.chem.magic",
           "name": "Magic",
-          "version": 22,
-          "version_name": "0.2.15",
+          "version": 23,
+          "version_name": "0.2.16",
           "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
           "path": "xiaomi-band-10-nfc/3.1.28/Magic/Magic-Band10NFC-3.1.28.chem",
-          "size": 157478,
-          "sha256": "cb001e0da41dfade57ea5baec06c81f5fc8fd31e42ca5e315eed00b2c91fbae5"
+          "size": 157470,
+          "sha256": "abddecfbef14620c73e685d06dd88e011a0cc45b4fd5dc18f1c01115ac0a924d"
         }
       ]
     }
