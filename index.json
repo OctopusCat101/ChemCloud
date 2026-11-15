@@ -15,11 +15,11 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638653446,
-        "face_id": "913211312",
+        "version": 638653699,
+        "face_id": "913211313",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
-        "size": 266784,
-        "sha256": "b5773005da10a4df6ba6598fc0e353f08839462da1098b66174ac7d7f77b7a04"
+        "size": 266928,
+        "sha256": "7a78d4646aaa295a9580ab12af15e0d502ad7ca635b2acb72043a366f9a71c2d"
       },
       "modules": [
         {
@@ -34,12 +34,44 @@
         {
           "id": "com.chem.magic",
           "name": "Magic",
-          "version": 14,
-          "version_name": "0.2.12",
+          "version": 22,
+          "version_name": "0.2.15",
           "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
           "path": "xiaomi-band-9/3.1.35/Magic/Magic-Band9-3.1.35.chem",
-          "size": 156113,
-          "sha256": "5e0bdd2a6cb0b58873564b0a3ad194e5857e7f5dd23ad0839c1d61218ccaeea3"
+          "size": 156157,
+          "sha256": "64696b2a7eb33d08d77f63f7b51d501096d6d2508d5dddb4ef02a9d93903f257"
+        }
+      ]
+    },
+    {
+      "model": "xiaomi-band-10-nfc",
+      "firmware": "3.1.28",
+      "target": "xiaomi-band-10-nfc-3.1.28",
+      "firmware_sha256": "fb726472416e99ba11d1c20ce8f0d4f0831a6e9a673d63bb5918e2c3921d8845",
+      "device_ids": [
+        "o66nfc",
+        "O66NFC",
+        "miwear.watch.o66nfc",
+        "xiaomi.watch.o66nfc",
+        "M2456B1"
+      ],
+      "loader": {
+        "version": 638653699,
+        "face_id": "913211313",
+        "path": "xiaomi-band-10-nfc/3.1.28/chem-loader/Chem-Band10NFC-3.1.28.face",
+        "size": 246264,
+        "sha256": "2ddf59916bc4cabb72f14786f3201af95cd88ee6e96077c772de53c9e4e4bf28"
+      },
+      "modules": [
+        {
+          "id": "com.chem.magic",
+          "name": "Magic",
+          "version": 22,
+          "version_name": "0.2.15",
+          "description": "原生资源包管理：图标、字体、日历与背景，支持蓝牙导入、离线切换和删除。",
+          "path": "xiaomi-band-10-nfc/3.1.28/Magic/Magic-Band10NFC-3.1.28.chem",
+          "size": 157478,
+          "sha256": "cb001e0da41dfade57ea5baec06c81f5fc8fd31e42ca5e315eed00b2c91fbae5"
         }
       ]
     }
