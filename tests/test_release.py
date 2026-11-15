@@ -56,6 +56,45 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 publisher.merge_target(original, dict(target='band9', loader=updated_loader, modules=[updated_module]))
 
+    def test_build_output_binds_target_directory_and_hash(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'out/nfc').mkdir(parents=True)
+            (root / 'dist').mkdir()
+            artifact = root / 'dist/Magic-NFC.chem'
+            artifact.write_bytes(b'nfc module')
+            report = dict(target='nfc', output=str(artifact), sha256=hashlib.sha256(artifact.read_bytes()).hexdigest())
+            manifest = root / 'out/nfc/build-manifest.json'
+            manifest.write_text(json.dumps(report))
+            self.assertEqual(publisher.build_output(root, 'nfc', '.chem'), artifact)
+            for invalid in [dict(report, target='band9'), dict(report, sha256='0' * 64),
+                            dict(report, output=str(root / 'private.chem'))]:
+                manifest.write_text(json.dumps(invalid))
+                with self.assertRaises(ValueError):
+                    publisher.build_output(root, 'nfc', '.chem')
+
+    def test_multi_target_failure_does_not_copy_partial_release(self):
+        from tools import publish as actual_publisher
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            original = '{"schema": 1, "targets": []}\n'
+            (root / 'index.json').write_text(original)
+            (root / 'README.md').write_text('当前发布：previous\n', encoding='utf-8')
+
+            def stage(repository, music, selected, target_id):
+                (repository / 'index.json').write_text('partial')
+                (repository / 'new.face').write_bytes(b'partial')
+                if target_id == 'nfc':
+                    raise ValueError('invalid NFC package')
+
+            with patch.object(actual_publisher, 'publish', side_effect=stage) as publish:
+                with self.assertRaises(ValueError):
+                    release.sync_files(root, root, ['chem', 'magic'], targets=['band9', 'nfc'])
+            self.assertEqual([c.kwargs['target_id'] for c in publish.call_args_list], ['band9', 'nfc'])
+            self.assertEqual((root / 'index.json').read_text(), original)
+            self.assertFalse((root / 'new.face').exists())
+
     def test_network_retry_uses_system_proxy_and_timeout(self):
         errors = [subprocess.CalledProcessError(128, 'git'),
                   subprocess.TimeoutExpired('git', 60), None]

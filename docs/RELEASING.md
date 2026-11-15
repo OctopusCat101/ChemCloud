@@ -71,3 +71,13 @@ Magic 已初始化独立私有源码仓库并配置 `origin`，可直接参与�
 - 远端已更新：通过普通 Git 合并处理分歧，再重试，不自动变基或强推。
 
 镜像仅用于客户端获取文件；Git 提交与推送使用原仓库地址。镜像缓存可能稍后更新，发布提交中会同时包含清单与对应文件。
+
+## 多目标发布
+
+显式重复 `--target` 可同时发布两个精确固件，分别读取各目标成功构建清单并校验签名、固件摘要、版本和表盘 ID：
+
+```powershell
+python D:/ChemCloud/release.py chem magic --skip-build --target xiaomi-band-9-3.1.35 --target xiaomi-band-10-nfc-3.1.28
+```
+
+去掉 `--skip-build` 会为每个目标构建并检查选中的项目。未提供 `--target` 时仍只处理 Chem/build.toml 默认目标。NFC 不复用默认 Band9 的 `.magic` 示例，付费资源始终排除；未选择的其他模块保留云端版本。

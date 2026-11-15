@@ -73,32 +73,26 @@ def bump_versions(repository):
     print(f'New build: 0x{version:08X}, watchface: {face_id}', flush=True)
 
 
-def sync_files(repository, music, selected=('chem', 'music', 'magic')):
+def sync_files(repository, music, selected=('chem', 'music', 'magic'), targets=None):
     from tools import publish as publisher
     with tempfile.TemporaryDirectory(prefix='chem-publish-') as folder:
         staging = Path(folder)
         if (repository / 'index.json').exists():
             shutil.copy2(repository / 'index.json', staging / 'index.json')
-        publisher.publish(staging, music, selected=selected)
-        catalog = json.loads((staging / 'index.json').read_text(encoding='utf-8'))
         config = tomllib.loads((CHEM / 'build.toml').read_text(encoding='utf-8'))
-        target = next(t for t in catalog['targets'] if t['target'] == config['target'])
-        loader = target['loader']
-        previous_path = repository / 'index.json'
-        if previous_path.exists():
-            previous = json.loads(previous_path.read_text(encoding='utf-8'))
-            old = next(t for t in previous['targets'] if t['target'] == target['target'])
-            check_version(loader, old['loader'])
-            if loader['sha256'] != old['loader']['sha256'] and loader['face_id'] == old['loader']['face_id']:
-                raise ValueError('Changed installer requires a new watchface ID')
-            for item in target['modules']:
-                for prior in old['modules']:
-                    if prior['id'] == item['id']:
-                        check_version(item, prior)
+        target_ids = targets or [config['target']]
+        for target_id in target_ids:
+            publisher.publish(staging, music, selected=selected, target_id=target_id)
+        catalog = json.loads((staging / 'index.json').read_text(encoding='utf-8'))
+        version = max(t['loader']['version'] for t in catalog['targets'] if t['target'] in target_ids)
         text = (repository / 'README.md').read_text(encoding='utf-8')
-        modules = '、'.join(f"{m['name']} `{m['version_name']} / code{m['version']}`" for m in target['modules'])
-        line = (f"当前发布：Chem 构建号 `0x{loader['version']:08X}`、安装器 ID `{loader['face_id']}`、"
-                f"{modules}，ABI 2.0。客户端插件单独分发。")
+        releases = []
+        for target in catalog['targets']:
+            loader = target['loader']
+            modules = '、'.join(f"{m['name']} `{m['version_name']} / code{m['version']}`" for m in target['modules'])
+            releases.append(f"{target['model']} / {target['firmware']}：Chem `0x{loader['version']:08X}`、"
+                            f"安装器 ID `{loader['face_id']}`、{modules}")
+        line = '当前发布：' + '；'.join(releases) + '，ABI 2.0。客户端插件单独分发。'
         text, count = re.subn(r'(?m)^当前发布：.*$', lambda _: line, text)
         if count != 1:
             raise ValueError('README must contain exactly one current-release line')
@@ -108,7 +102,7 @@ def sync_files(repository, music, selected=('chem', 'music', 'magic')):
             destination = repository / path
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(staging / path, destination)
-        return loader['version'], paths
+        return version, paths
 
 
 def check_version(new, old):
@@ -124,6 +118,9 @@ def main():
     parser.add_argument('--skip-build', action='store_true', help='Publish existing verified builds')
     parser.add_argument('--dry-run', action='store_true', help='Validate only; do not build, commit or push')
     parser.add_argument('--no-push', action='store_true', help='Commit the release locally without pushing')
+    from tools.publish import TARGETS
+    parser.add_argument('--target', dest='targets', action='append', choices=TARGETS,
+                        help='Exact firmware target; repeat to publish multiple targets (default: Chem build.toml)')
     args = parser.parse_args()
     selected = available if not args.projects or args.projects == ['all'] else list(dict.fromkeys(args.projects))
     if any(name not in available for name in selected):
@@ -134,7 +131,7 @@ def main():
             staging = Path(folder)
             for name in ('README.md', 'index.json'):
                 shutil.copy2(repository / name, staging / name)
-            version, _ = sync_files(staging, music, selected)
+            version, _ = sync_files(staging, music, selected, targets=args.targets)
             print(f'DRY RUN OK: current artifacts 0x{version:08X}; no files published')
         return
     if git(repository, 'branch', '--show-current') != 'main':
@@ -149,10 +146,12 @@ def main():
         for name in selected:
             if name == 'chem':
                 bump_versions(repository)
-            command(name, items[name]['build'])
-            for test in items[name].get('tests', []):
-                command(name, test)
-    version, paths = sync_files(repository, music, selected)
+            for target_id in args.targets or [None]:
+                suffix = ['--target', target_id] if target_id else []
+                command(name, [*items[name]['build'], *suffix])
+                for test in items[name].get('tests', []):
+                    command(name, [*test, *(suffix if name == 'magic' else [])])
+    version, paths = sync_files(repository, music, selected, targets=args.targets)
     run('git', 'diff', '--check', cwd=repository)
     run('git', 'add', '--', *paths, cwd=repository)
     if not git(repository, 'diff', '--cached', '--name-only'):

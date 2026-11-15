@@ -13,6 +13,23 @@ from tools.projects import projects
 
 ROOT = projects()['chem']['path']
 
+TARGETS = {
+    'xiaomi-band-9-3.1.35': ('xiaomi-band-9', [
+        'M2346B1', 'miwear.watch.n66tc', 'n66tc', 'N66TC', 'xiaomi.watch.n66', 'M2345B1']),
+    'xiaomi-band-10-nfc-3.1.28': ('xiaomi-band-10-nfc', [
+        'o66nfc', 'O66NFC', 'miwear.watch.o66nfc', 'xiaomi.watch.o66nfc', 'M2456B1']),
+}
+
+
+def build_output(project, target, suffix):
+    report = json.loads((project / 'out' / target / 'build-manifest.json').read_text(encoding='utf-8'))
+    source = Path(report['output']).resolve()
+    if report.get('target') != target or source.parent != (project / 'dist').resolve() or source.suffix != suffix:
+        raise ValueError('Build output does not match project and target')
+    if hashlib.sha256(source.read_bytes()).hexdigest() != report.get('output_sha256', report.get('sha256')):
+        raise ValueError('Artifact does not match its successful build manifest')
+    return source
+
 def merge_target(catalog, target):
     if catalog.get('schema') != 1:
         raise ValueError('Unsupported repository schema')
@@ -34,17 +51,19 @@ def merge_target(catalog, target):
                                  for t in catalog['targets']] if previous else [*catalog['targets'], target]}
 
 
-def publish(repository, music, magic=None, selected=('chem', 'music', 'magic')):
+def publish(repository, music, magic=None, selected=('chem', 'music', 'magic'), target_id=None):
     config = tomllib.loads((ROOT / 'build.toml').read_text(encoding='utf-8'))
+    default_target = config['target']
+    config['target'] = target_id or default_target
+    if config['target'] not in TARGETS:
+        raise ValueError('Unsupported publication target: ' + config['target'])
+    model, device_ids = TARGETS[config['target']]
     profile = tomllib.loads((ROOT / 'targets' / config['target'] / 'target.toml').read_text(encoding='utf-8'))
     previous_path = repository / 'index.json'
     previous = json.loads(previous_path.read_text(encoding='utf-8')) if previous_path.exists() else {'schema': 1, 'targets': []}
     old_target = next((t for t in previous['targets'] if t['target'] == config['target']), None)
     if 'chem' in selected:
-        face = ROOT / 'dist' / (config['output_name'] + '.face')
-        build = json.loads((ROOT / 'out' / config['target'] / 'build-manifest.json').read_text(encoding='utf-8'))
-        if hashlib.sha256(face.read_bytes()).hexdigest() != build['output_sha256']:
-            raise ValueError('Framework face does not match its successful build manifest')
+        face = build_output(ROOT, config['target'], '.face')
         version = re.search(r'#define CHEM_BAND9_MANAGER_BUILD_ID\s+UINT32_C\((0x[0-9a-fA-F]+)\)',
                             (ROOT / 'manager/target/lvgl_v8/chem_manager_target_lvgl_v8.c').read_text(encoding='utf-8'))
         if not version:
@@ -52,7 +71,7 @@ def publish(repository, music, magic=None, selected=('chem', 'music', 'magic')):
     spec = importlib.util.spec_from_file_location('chem_native_package', ROOT / 'scripts/package-module.py')
     packer = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(packer)
-    base = Path('xiaomi-band-9') / profile['firmware_version']
+    base = Path(model) / profile['firmware_version']
     copies = []
 
     def artifact(source, directory):
@@ -63,10 +82,7 @@ def publish(repository, music, magic=None, selected=('chem', 'music', 'magic')):
 
     def module(project, directory):
         settings = tomllib.loads((project / 'build.toml').read_text(encoding='utf-8'))
-        source = project / 'dist' / (settings['output_name'] + '.chem')
-        report = json.loads((project / 'out' / config['target'] / 'build-manifest.json').read_text(encoding='utf-8'))
-        if hashlib.sha256(source.read_bytes()).hexdigest() != report.get('output_sha256', report.get('sha256')):
-            raise ValueError(directory + ' package does not match successful build manifest')
+        source = build_output(project, config['target'], '.chem')
         with zipfile.ZipFile(source) as archive:
             manifest = json.loads(archive.read('manifest.json'))
             signed, elf = archive.read('receipt.bin'), archive.read('module.elf')
@@ -100,7 +116,9 @@ def publish(repository, music, magic=None, selected=('chem', 'music', 'magic')):
         compiler = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(compiler)
         resources = {'schema': 1, 'target': config['target'], 'packages': []}
-        for filename, source_dir in settings.get('cloud', {}).get('resource_packages', {}).items():
+        # Resource assets are firmware-specific; the default sample is not an NFC conversion.
+        samples = settings.get('cloud', {}).get('resource_packages', {}) if config['target'] == default_target else {}
+        for filename, source_dir in samples.items():
             if Path(filename).name != filename or not filename.endswith('.magic'):
                 raise ValueError('Invalid resource package filename')
             source_root = (magic / source_dir).resolve()
@@ -121,9 +139,9 @@ def publish(repository, music, magic=None, selected=('chem', 'music', 'magic')):
         loader = old_target['loader']
     else:
         raise ValueError('Publish Chem before publishing modules for a new target')
-    target = {'model': 'xiaomi-band-9', 'firmware': profile['firmware_version'],
+    target = {'model': model, 'firmware': profile['firmware_version'],
               'target': config['target'], 'firmware_sha256': profile['firmware_sha256'],
-              'device_ids': ['M2346B1', 'miwear.watch.n66tc', 'n66tc', 'N66TC', 'xiaomi.watch.n66', 'M2345B1'],
+              'device_ids': device_ids,
               'loader': loader,
               'modules': modules}
     catalog_path = repository / 'index.json'
