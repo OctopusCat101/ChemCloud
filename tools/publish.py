@@ -17,7 +17,7 @@ TARGETS = {
     'xiaomi-band-9-3.1.35': ('xiaomi-band-9', [
         'M2346B1', 'miwear.watch.n66tc', 'n66tc', 'N66TC', 'xiaomi.watch.n66', 'M2345B1']),
     'xiaomi-band-10-nfc-3.1.28': ('xiaomi-band-10-nfc', [
-        'o66nfc', 'O66NFC', 'miwear.watch.o66nfc', 'xiaomi.watch.o66nfc', 'M2456B1']),
+        'o66nfc', 'O66NFC', 'miwear.watch.o66nfc', 'xiaomi.watch.o66nfc', 'M2456B1', 'M2457B1']),
 }
 
 

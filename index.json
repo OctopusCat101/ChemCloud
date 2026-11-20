@@ -53,7 +53,8 @@
         "O66NFC",
         "miwear.watch.o66nfc",
         "xiaomi.watch.o66nfc",
-        "M2456B1"
+        "M2456B1",
+        "M2457B1"
       ],
       "loader": {
         "version": 638653700,

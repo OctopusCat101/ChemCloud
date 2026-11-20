@@ -19,6 +19,16 @@ spec.loader.exec_module(publisher)
 
 
 class ReleaseTests(unittest.TestCase):
+    def test_shared_firmware_hardware_ids_survive_publication(self):
+        target_id = 'xiaomi-band-10-nfc-3.1.28'
+        catalog = json.loads((ROOT / 'index.json').read_text(encoding='utf-8'))
+        target = next(t for t in catalog['targets'] if t['target'] == target_id)
+        generated_ids = publisher.TARGETS[target_id][1]
+        for model in ('M2456B1', 'M2457B1'):
+            self.assertIn(model, target['device_ids'])
+            self.assertIn(model, generated_ids)
+        self.assertEqual(target['firmware'], '3.1.28')
+
     def test_magic_release_never_builds_or_syncs_other_projects(self):
         with patch.object(sys, 'argv', ['release.py', 'magic']), \
              patch.object(release, 'git', side_effect=['main', '', '0', 'index.json', 'commit-id']), \
