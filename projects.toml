@@ -3,7 +3,7 @@ schema = 1
 [projects.chem]
 path = "../Chem"
 build = ["tools/build/build.py", "--project", ".", "face"]
-tests = [["tests/tooling/test_boot_flash.py"], ["tests/tooling/test_boot_persistence.py"]]
+tests = [["scripts/test-native-delivery.py"]]
 publish = true
 
 [projects.music]
