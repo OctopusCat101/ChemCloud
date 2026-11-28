@@ -15,11 +15,11 @@
         "M2345B1"
       ],
       "loader": {
-        "version": 638657025,
-        "face_id": "913211316",
+        "version": 638658561,
+        "face_id": "913211317",
         "path": "xiaomi-band-9/3.1.35/chem-loader/Chem-Band9-3.1.35.face",
         "size": 231612,
-        "sha256": "9452df15f844f823e45120858d9bb2fb952efa951865fe0fca9a4fb5bb5d78f4"
+        "sha256": "3abd2ed67ea6ccc2d45ef657c28c5cfa6f064555f2c81f9b1650835b2a8a661f"
       },
       "modules": [
         {
@@ -57,11 +57,11 @@
         "M2457B1"
       ],
       "loader": {
-        "version": 638657025,
-        "face_id": "913211316",
+        "version": 638658561,
+        "face_id": "913211317",
         "path": "xiaomi-band-10-nfc/3.1.28/chem-loader/Chem-Band10NFC-3.1.28.face",
-        "size": 245504,
-        "sha256": "e91006a07cfc0acdeaff84ea719186a4cf92e355c04ede061505cee10b5ac8e7"
+        "size": 364816,
+        "sha256": "60b18e88f026379b502f2c73fbd8e99491aabf02d50405459c3557c6945629b4"
       },
       "modules": [
         {
